@@ -609,6 +609,19 @@ public class Assert {
         return true;
     }
 
+    static private boolean doubleIsDifferentSigFigs(double d1, double d2, int sigFigs, double base) {
+        if (Double.compare(d1, d2) == 0) {
+            return false;
+        }
+        if (Double.compare(d1, 0.0) == 0 ^ Double.compare(d2, 0.0) == 0) {
+            return true;
+        }
+        double diffMagnitude = Math.log(Math.abs(d1 - d2)) / Math.log(base);
+        double maxMagnitude =
+            Math.max(Math.log(Math.abs(d1)), Math.log(Math.abs(d2))) / Math.log(base);
+        return Math.abs(maxMagnitude - diffMagnitude) > sigFigs;
+    }
+
     static private boolean floatIsDifferent(float f1, float f2, float delta) {
         if (Float.compare(f1, f2) == 0) {
             return false;
